@@ -1,72 +1,89 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push } from "firebase/database";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-// Paste your Firebase config here:
 const firebaseConfig = {
-    apiKey: "AIzaSyCgbxt9HOVeZSwOx7tiYjjCMM4CkF6MZRg",
-    authDomain: "database-datahtml.firebaseapp.com",
-    databaseURL: "https://database-datahtml-default-rtdb.firebaseio.com",
-    projectId: "database-datahtml",
-    storageBucket: "database-datahtml.appspot.com",
-    messagingSenderId: "607702908743",
-    appId: "1:607702908743:web:48fa97ac75aa67f36a1662"
-  };
+  apiKey: "AIzaSyDR4OcZjXWx8N0fxGsXo2GbpNqpM1abwzg",
+  authDomain: "demodatabase-53316.firebaseapp.com",
+  projectId: "demodatabase-53316",
+  storageBucket: "demodatabase-53316.appspot.com",
+  messagingSenderId: "76423877688",
+  appId: "1:76423877688:web:4ee548af95ea19ec1742cd"
+};
 
-  document.addEventListener('DOMContentLoaded', () => {
+const app = initializeApp(firebaseConfig);
+const db = getDatabase();
 
-    // Initialize Firebase app
-    const app = initializeApp(firebaseConfig);
+// Get input elements
+let FnameInp = document.getElementById('FnameInp');
+let LnameInp = document.getElementById('LnameInp');
+let CnicInp = document.getElementById('CnicInp');
 
-    // Log to check if Firebase app is correctly initialized
-    console.log('Firebase app initialized:', app);
-  
-    // Initialize Firebase database
-    const database = getDatabase(app);
-  
-    // Log to check if Firebase database is correctly initialized
-    console.log('Firebase database initialized:', database);
-  
-    // Get the 'cart' node reference
-    const cartRef = ref(database, 'cart');
-  
-    // Get DOM elements
-    const inputfieldEl = document.getElementById('input-field');
-    const addbuttonEl = document.getElementById('add-button');
-  
-    // Debug: Check if DOM elements are loaded
-    if (!inputfieldEl || !addbuttonEl) {
-        console.error('DOM elements not found. Check your HTML IDs.');
-        return;
+// Get button elements
+let AddBtn = document.getElementById('AddBtn');
+let RetrieveBtn = document.getElementById('RetrieveBtn');
+let UpdateBtn = document.getElementById('UpdateBtn');
+let DeleteBtn = document.getElementById('DeleteBtn');
+
+// Add data to Firebase
+function AddData() {
+  set(ref(db, 'EmployeeSet/' + CnicInp.value), {
+    nameofemployee: {
+      firstname: FnameInp.value,
+      lastname: LnameInp.value
+    },
+    cnic: Number(CnicInp.value)
+  }).then(() => {
+    alert("Data Added Successfully");
+  }).catch((error) => {
+    alert("Unsuccessful");
+    console.log(error);
+  });
+}
+
+// Retrieve data from Firebase
+function RetData() {
+  const dbRef = ref(db);
+
+  get(child(dbRef, 'EmployeeSet/' + CnicInp.value)).then((snapshot) => {
+    if (snapshot.exists()) {
+      FnameInp.value = snapshot.val().nameofemployee.firstname;
+      LnameInp.value = snapshot.val().nameofemployee.lastname;
+    } else {
+      alert("Employee does not exist");
     }
-  
-    console.log('Input Field:', inputfieldEl);
-    console.log('Add Button:', addbuttonEl);
-  
-    // Add event listener to the button
-    addbuttonEl.addEventListener('click', function() {
-        let inputValue = inputfieldEl.value;
-  
-        // Log the click event and input value
-        console.log('Button clicked! Input value:', inputValue);
-  
-        // Check if input field is not empty
-        if (inputValue) {
-            console.log('Adding to cart:', inputValue);
-  
-            // Try pushing the data to Firebase
-            push(cartRef, inputValue)
-            .then(() => {
-                console.log(`${inputValue} successfully added to cart in the database`);
-  
-                // Clear the input field after successful submission
-                inputfieldEl.value = "";
-            })
-            .catch((error) => {
-                // Log any errors that occur during the push operation
-                console.error('Error while adding item to cart:', error);
-            });
-        } else {
-            console.log("Input field is empty");
-        }
-    });
-});
+  }).catch((error) => {
+    alert("Unsuccessful");
+    console.log(error);
+  });
+}
+
+// Update data in Firebase
+function UpdateData() {
+  update(ref(db, 'EmployeeSet/' + CnicInp.value), {
+    nameofemployee: {
+      firstname: FnameInp.value,
+      lastname: LnameInp.value
+    }
+  }).then(() => {
+    alert("Data Updated Successfully");
+  }).catch((error) => {
+    alert("Unsuccessful");
+    console.log(error);
+  });
+}
+
+// Delete data from Firebase
+function DeleteData() {
+  remove(ref(db, 'EmployeeSet/' + CnicInp.value)).then(() => {
+    alert("Data Deleted Successfully");
+  }).catch((error) => {
+    alert("Unsuccessful");
+    console.log(error);
+  });
+}
+
+// Event listeners for buttons
+AddBtn.addEventListener('click', AddData);
+RetrieveBtn.addEventListener('click', RetData);
+UpdateBtn.addEventListener('click', UpdateData);
+DeleteBtn.addEventListener('click', DeleteData);

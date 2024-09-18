@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add to cart</title>
-
-    <!-- Firebase SDK scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-
-
-    <!-- Link to your stylesheet (if you have one) -->
+    <title>Demo-firebase-realtime database</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <input type="text" id="input-field" placeholder="Bread">
-    <button id="add-button">Add to cart</button>
+    <h1>Demo-firebase-realtime</h1>
 
-    <!-- Link to your JavaScript file -->
-    <script src="index.js" type="module"></script>
+    <label>Firstname:</label>
+    <input type="text" id="FnameInp">
+    <br>
+
+    <label>Lastname:</label>
+    <input type="text" id="LnameInp">
+    <br>
+
+    <label>CNIC:</label>
+    <input type="text" id="CnicInp">
+    <br>
+
+    <button id="AddBtn">Add</button>
+    <button id="RetrieveBtn">Retrieve</button>
+    <button id="UpdateBtn">Update</button>
+    <button id="DeleteBtn">Delete</button>
+
+    <script src="index.js" type="module">
+     
+    </script>
 </body>
 </html>

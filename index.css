@@ -1,20 +1,19 @@
-html, body {
-    padding-top: 150px;
-    margin-left: 300px;
+label {
+    display: inline-block;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 110px;
 }
 
-#input-field{
-    padding: 10px;
-    border-radius: 3px;
-    border-color: black;
+input, select {
+    width: 160px;
+    height: 30px;
+    font-size: 16px;
+    margin: 10px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-#add-button{
-    padding: 10px;
-    font-weight: bold;
-    border-radius: 3px;
-}
-
-#add-button:hover{
-    cursor: pointer;
+button {
+    height: 30px;
+    width: 70px;
 }
